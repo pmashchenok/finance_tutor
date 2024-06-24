@@ -1,2 +1,10 @@
 # created by virtualenv automatically
+/venv/
+/.venv/
+/.env/
+
+# Игнорирование файлов, созданных виртуальным окружением Python
+*.pyc
+*.pyo
+__pycache__/
 
