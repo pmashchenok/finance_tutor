@@ -9,3 +9,6 @@ def index(request):
 def about(request):
     return render(request, "main_site/about.html")
 
+
+def test(request):
+    return render(request, "main_site/test.html")
