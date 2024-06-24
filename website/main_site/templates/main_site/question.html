@@ -1,0 +1,10 @@
+{% extends "test.html" %}
+
+{% block content %}
+    <h2>№{{ test.steps }}. {{ test.question.1 }}</h2>
+    <form class="questions">
+        {% for i in '1234'|makelist %}
+        <label for="button{{ i }}"><input type="radio" id="button{{ i }}" name="question" value="{{ i }}" />{{ i }}</label>
+        {% endfor %}
+    </form>
+{% endblock %}

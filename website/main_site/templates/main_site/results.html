@@ -1,0 +1,24 @@
+{% extends "test.html" %}
+
+{% block content %}
+    <h2>Результаты</h2>
+    <div class="results">
+        {% if test.score < 3 %}
+        <p style="color: rgb(185, 20, 20)">{{ test.score }}/10</p>
+        <p>Комментарий</p>
+        {% elif test.score < 6 %}
+        <p style="color: rgb(185, 86, 20)">{{ test.score }}/10</p>
+        <p>Комментарий</p>
+        {% elif test.score < 9 %}
+        <p style="color: rgb(185, 177, 20)">{{ test.score }}/10</p>
+        <p>Комментарий</p>
+        {% else %}
+        <p style="color: rgb(58, 185, 20)">{{ test.score }}/10</p>
+        <p>Комментарий</p>
+        {% endif %}
+    </div>
+    <div class="commentary">
+        <h2>Рекомендации</h2>
+        <p>Текст</p>
+    </div>
+{% endblock %}
