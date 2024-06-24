@@ -4,33 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3d45e3f4-1d9e-46a2-953e-361ffeb96868" name="Changes" comment="v 1.0">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/db.sqlite3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/static/main_site/css/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/templates/main_site/about.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/templates/main_site/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/templates/main_site/layout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/main_site/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/manage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/web/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/web/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/web/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/web/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/website/web/wsgi.py" afterDir="false" />
+    <list default="true" id="3d45e3f4-1d9e-46a2-953e-361ffeb96868" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.venv/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.venv/pyvenv.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" show_ignored="true">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -62,7 +49,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/buhry/PycharmProjects/Renessans_praktika"
+    "last_opened_file_path": "C:/Users/buhry/PycharmProjects/Renessans_praktika",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -86,6 +74,15 @@
       <option name="presentableId" value="Default" />
       <updated>1718103155430</updated>
     </task>
+    <task id="LOCAL-00001" summary="v 1.0">
+      <option name="closed" value="true" />
+      <created>1719220755883</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1719220755883</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
