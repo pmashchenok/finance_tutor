@@ -10,5 +10,9 @@ def about(request):
     return render(request, "main_site/about.html")
 
 
-def quiz(request):
-    return render(request, "main_site/quiz.html")
+def start_quiz(request):
+    return render(request, "main_site/start_quiz.html")
+
+
+def question(request):
+    return render(request, "main_site/question.html")
