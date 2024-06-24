@@ -1,19 +1,19 @@
-{% extends "quiz.html" %}
+{% extends "main_site/quiz_layout.html" %}
 
 {% block content %}
     <h2>Результаты</h2>
     <div class="results">
-        {% if test.score < 3 %}
-        <p style="color: rgb(185, 20, 20)">{{ test.score }}/10</p>
+        {% if score < 3 %}
+        <p style="color: rgb(185, 20, 20)">{{ score }}/10</p>
         <p>Комментарий</p>
-        {% elif test.score < 6 %}
-        <p style="color: rgb(185, 86, 20)">{{ test.score }}/10</p>
+        {% elif score < 6 %}
+        <p style="color: rgb(185, 86, 20)">{{ score }}/10</p>
         <p>Комментарий</p>
-        {% elif test.score < 9 %}
-        <p style="color: rgb(185, 177, 20)">{{ test.score }}/10</p>
+        {% elif score < 9 %}
+        <p style="color: rgb(185, 177, 20)">{{ score }}/10</p>
         <p>Комментарий</p>
         {% else %}
-        <p style="color: rgb(58, 185, 20)">{{ test.score }}/10</p>
+        <p style="color: rgb(58, 185, 20)">{{ score }}/10</p>
         <p>Комментарий</p>
         {% endif %}
     </div>

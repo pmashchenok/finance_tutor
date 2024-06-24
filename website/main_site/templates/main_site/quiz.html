@@ -1,30 +1,11 @@
+{% extends "main_site/quiz_layout.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>Test</title>
-        <link rel="stylesheet" href="test.css">
-    </head>
-    <body>
-        <div class="container">
-            <div class="navbar">
-                Navbar
-            </div>
-            <div class="content">
-                {% block content %} 
-                {% endblock %}
-                <!--- 
-                <h2>№1. Вопрос 1</h2>
-                <form class="questions">
-                    <label><input type="radio" id="button1" name="question" value="1" />1</label>
-                    <label><input type="radio" id="button2" name="question" value="2" />2</label>
-                    <label><input type="radio" id="button3" name="question" value="3" />3</label>
-                    <label><input type="radio" id="button4" name="question" value="4" />4</label>
-                </form>
-                -->
-            </div>            
-        </div>
-    </body>
-</html>
+
+{% block content %}
+<script>
+    let test = JSON.parse("{{ test|escapejs }}");
+    let results_url = "{% url 'results' %}"
+</script>
+<div class="question"></div>
+<script src="{% static 'quiz.js' %}"></script>
+{% endblock %}

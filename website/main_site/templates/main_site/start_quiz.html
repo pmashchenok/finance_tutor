@@ -1,7 +1,7 @@
-{% extends "main_site/quiz.html" %}
+{% extends "main_site/quiz_layout.html" %}
 
 {% block content %}
     <h2>Тест</h2>
     <p>Тест состоит из 10 вопросов.</p>
-    <a href="{% url 'question' %}">Начать тест</a> 
+    <a href="{% url 'quiz' %}">Начать тест</a> 
 {% endblock %}
