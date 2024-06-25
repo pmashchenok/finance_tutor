@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from . import testing
 import json
 import sys
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 
 # testing.make_db() # TODO
 test = testing.TestState()
@@ -26,6 +30,43 @@ def index(request):
 
 def about(request):
     return render(request, "main_site/about.html")
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        try:
+            user = User.objects.create_user(username=username, password=password)
+            login(request, user)
+            return redirect('profile')
+        except IntegrityError:
+            error_message = "Пользователь с таким именем уже существует."
+            return render(request, 'signup.html', {'error_message': error_message})
+    return render(request, 'signup.html')
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('profile')
+        else:
+            return render(request, 'login.html', {'error': 'Неверный логин или пароль!'})
+    return render(request, 'login.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('main')
+
+
+@login_required
+def profile_view(request):
+    return render(request, 'profile.html')
 
 
 def start_quiz(request):

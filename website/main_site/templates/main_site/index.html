@@ -6,6 +6,12 @@
     <h1>Главная</h1>
     <p>Это Главная страница</p>
     <a href="{% url 'start_quiz' %}">Тест</a>
+    {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}">Профиль</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Вход</a></li>
+                <li><a href="{% url 'signup' %}">Регистрация</a></li>
+            {% endif %}
 {% endblock %}
 <h1>Информация</h1>
     <p>Это инфо страница</p>
