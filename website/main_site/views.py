@@ -36,6 +36,7 @@ def quiz(request):
     test_context = json.dumps([q.__dict__ for q in test.question_list])
     return render(request, "main_site/quiz.html", context={"test": test_context})
 
+
 def results(request):
     test.score = 0
     if request.method == "GET":
