@@ -1,0 +1,26 @@
+{% extends game.html %}
+
+{% block dialogue %}
+<div class="other-character">
+    <img src="assets/{{ state.event.character }}.png">
+    <p>{{ state.event.character }}</p>
+</div>
+<div class="dialogue">
+    <p>{{ state.event.text }}</p>
+    {% if state.event.type == EventType.CHOICE %}
+    <form>
+        <label><input type="radio" id="button1" name="question" value="1" />Да</label>
+        <label><input type="radio" id="button2" name="question" value="2" />Нет</label>
+    </form>
+    {% else %}
+    <form>
+        <label for="answer">Введите число</label>
+        <input type="text" id="answer" name="answer" required minlength="1" />
+    </form>
+    {% endif %}
+</div>
+<div class="character">
+    <img src="assets/mc.png">
+    <p>{{ state.char.name }}</p>
+</div>
+{% endblock %}
