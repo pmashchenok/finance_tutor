@@ -83,3 +83,15 @@ def results(request):
         answers = json.loads(f"[{request.GET['results']}]")
         test.check_answers(answers)
         return render(request, "main_site/results.html", context={"score": test.score})
+    
+def start_game(request):
+    return render(request, "main_site/start_game.html")
+
+def chara_input(request):
+    return render(request, "main_site/chara_input.html")
+
+def product_input(request):
+    return render(request, "main_site/product_input.html")
+
+def game(request):
+    return render(request, "main_site/game.html")

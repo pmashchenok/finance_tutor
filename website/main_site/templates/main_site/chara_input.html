@@ -1,8 +1,8 @@
-{% extends "game.html" %}
+{% extends "main_site/game_layout.html" %}
 
 {% block content %}
 <div class="chara_input">
-    <form method="POST">
+    <form method="POST" action="{% url 'product_input' %}">
     {% csrf_token %}
         <div id="input_field">
             <label for="name">Имя </label>
@@ -25,7 +25,7 @@
         </div>
         <div id="input_field">
             <label for="client">Являетесь ли Вы клиентом КБ Ренессанс? </label>
-            <select name="client">
+            <select name="client" required>
                 <option value="y">Да</option>
                 <option value="n">Нет</option>
             </select>

@@ -1,5 +1,22 @@
-{% extends "game.html" %}
+{% extends "main_site/game_layout.html" %}
+{% load static %}
 
 {% block content %}
-
+<div class="chara_input">
+    <form method="POST" action="{% url 'game' %}">
+    {% csrf_token %}
+        <div id="input_product">
+            <label for="product_name">Выберите желаемый продукт </label>
+            <select name="product_name" required>
+                <option value="mainloan">Кредит на любые цели</option>
+                <option value="targetloan">Кредит на покупку товара</option>
+                <option value="cc2y">Кредитная карта "2 года без %"</option>
+                <option value="cc200d">Кредитная карта "200 дней без %"</option>
+            </select>
+        </div>
+        <div id="input_details"></div>
+        <button type="submit">Перейти к игре</button>
+   </form>
+</div>
+<script src="{% static 'product.js' %}"></script>
 {% endblock %}
