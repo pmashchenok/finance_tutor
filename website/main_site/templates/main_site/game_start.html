@@ -1,0 +1,11 @@
+{% extends "game.html" %}
+
+{% block content %}
+<div>
+    <h2>Игра</h2>
+    <p>Описание игры и т.п.</p>
+    <a href="{{ url 'chara_input' }}">
+        <button>Перейти к созданию персонажа</button>
+    </a>
+</div>
+{% endblock %}

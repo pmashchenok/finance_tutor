@@ -1,0 +1,36 @@
+{% extends "game.html" %}
+
+{% block content %}
+<div class="chara_input">
+    <form method="POST">
+    {% csrf_token %}
+        <div id="input_field">
+            <label for="name">Имя </label>
+            <input type="text" name="name" required/>
+        </div>
+        <div id="input_field">
+            <label for="age">Возраст </label>
+            <input type="text" name="age" required/>
+        </div>
+        <div id="input_field">
+            <label for="ctzn">Гражданство </label>
+            <input type="text" name="ctzn" required/>
+        <div id="input_field">
+            <label for="income">Месячный доход </label>
+            <input type="text" name="income" required/>
+        </div>
+        <div id="input_field">
+            <label for="workexp">Стаж работы (на текущем месте работы) </label>
+            <input type="text" name="workexp" required/>
+        </div>
+        <div id="input_field">
+            <label for="client">Являетесь ли Вы клиентом КБ Ренессанс? </label>
+            <select name="client">
+                <option value="y">Да</option>
+                <option value="n">Нет</option>
+            </select>
+        </div>
+        <button type="submit">Далее</button>
+   </form>
+</div>
+{% endblock %}
