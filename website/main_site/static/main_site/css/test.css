@@ -86,3 +86,17 @@ button.submit_button:hover {
     justify-content: center;
     align-items: center;
 }
+
+.navbar {
+    color: rgb(197, 197, 197);
+    font-size: 120%;
+    margin-top: 1%;
+    padding: 1%;
+    border-radius: 16px;
+    border: 2px solid rgb(197, 197, 197);
+    box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    color: #ff0078;
+}
