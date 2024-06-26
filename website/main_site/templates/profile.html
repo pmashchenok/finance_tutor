@@ -1,12 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main_site/css/profile.css' %}">
 </head>
 <body>
     <h2>Добро пожаловать, {{ user.username }}!</h2>
-    <p>Это ваша страница профиля!.</p>
-    <a href="{% url 'main' %}">На главную</a>
+    <p>Это ваша страница профиля!</p>
+    <a href="{% url 'main' %}">На главную</a><br>
     <a href="{% url 'logout' %}">Выход</a>
 </body>
 </html>

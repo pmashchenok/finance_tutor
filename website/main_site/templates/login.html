@@ -1,22 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main_site/css/login.css' %}">
 </head>
 <body>
-    <h2>Login</h2>
+<h2>Вход</h2>
     <form method="POST">
         {% csrf_token %}
         <label for="username">Логин:</label>
-        <input type="text" name="username" id="username" required><br><br>
+        <input type="text" name="username" id="username" required><br>
         <label for="password">Пароль:</label>
-        <input type="password" name="password" id="password" required><br><br>
+        <input type="password" name="password" id="password" required><br>
         <button type="submit">Войти</button>
     </form>
+    <br>
+    <p>Нет аккаунта? </p>
+    <a href="{% url 'signup' %}">Регистрация</a>
     {% if error %}
-        <p style="color: red;">{{ error }}</p>
+        <p class="error">{{ error }}</p>
     {% endif %}
-    <p>Уже есть аккаунт? <a href="{% url 'signup' %}">Sign Up</a></p>
-    <a href="{% url 'main' %}">На главную</a>
 </body>
 </html>

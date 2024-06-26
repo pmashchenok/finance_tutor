@@ -5,7 +5,8 @@
 {% block content %}
     <h1>Главная</h1>
     <p>Это Главная страница</p>
-    <a href="{% url 'start_quiz' %}">Тест</a>
+    <a href="{% url 'start_quiz' %}">Тест</a><br>
+    <a href="{% url 'start_game' %}">Игра</a><br>
     {% if user.is_authenticated %}
                 <li><a href="{% url 'profile' %}">Профиль</a></li>
             {% else %}
