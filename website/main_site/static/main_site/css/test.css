@@ -78,3 +78,11 @@ button.submit_button:hover {
 .results p#score {
     font-size: 36px;
 }
+
+.results {
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+    justify-content: center;
+    align-items: center;
+}

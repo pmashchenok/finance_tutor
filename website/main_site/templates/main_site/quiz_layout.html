@@ -9,14 +9,14 @@
     </head>
     <body>
         <div class="container">
+           <div class="content">
+                {% block content %} 
+                {% endblock %}
+            </div>            
             <div class="navbar">
                 {% block navbar %}
                 {% endblock %}
             </div>
-            <div class="content">
-                {% block content %} 
-                {% endblock %}
-            </div>            
         </div>
     </body>
 </html>
