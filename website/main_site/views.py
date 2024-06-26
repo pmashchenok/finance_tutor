@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from . import gamec
+from . import products
 
 # testing.make_db() # TODO
 test = testing.TestState()
@@ -22,6 +24,7 @@ test.question_list = [testing.Question(1, "Тестовый вопрос 1"),
                       testing.Question(9, "Тестовый вопрос 9"),
                       testing.Question(10, "Тестовый вопрос 10")]
 test.answers_list = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2]
+character = None
 
 
 def index(request):
@@ -91,7 +94,18 @@ def chara_input(request):
     return render(request, "main_site/chara_input.html")
 
 def product_input(request):
-    return render(request, "main_site/product_input.html")
+    global character
+    if request.method == "POST":
+        name = request.POST["name"]
+        age = request.POST["age"]
+        citizenship = request.POST["ctzn"]
+        income = request.POST["income"]
+        work_exp = request.POST["work_exp"]
+        client = request.POST["client"] == "y"
+        character = gamec.Character(name, age, citizenship, income, work_exp, income, client)
+        context = json.dumps(character.__dict__)
+        print(context, file=sys.stderr)
+        return render(request, "main_site/product_input.html", context={ "character": context })
 
 def game(request):
     return render(request, "main_site/game.html")

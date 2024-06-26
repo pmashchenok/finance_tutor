@@ -2,6 +2,9 @@
 {% load static %}
 
 {% block content %}
+<script>
+    let character = JSON.parse("{{ character|escapejs }}");
+</script>
 <div class="chara_input">
     <form method="POST" action="{% url 'game' %}">
     {% csrf_token %}
@@ -15,7 +18,7 @@
             </select>
         </div>
         <div id="input_details"></div>
-        <button type="submit">Перейти к игре</button>
+        <button id="submit" type="submit">Перейти к игре</button>
    </form>
 </div>
 <script src="{% static 'product.js' %}"></script>
