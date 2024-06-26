@@ -1,11 +1,16 @@
 {% extends "main_site/quiz_layout.html" %}
 {% load static %}
 
+{% block navbar %}
+    <a href="{% url 'main' %}">Вернуться на главную</a> |
+    <a href="{% url 'start_quiz' %}">Начать заново</a>
+{% endblock %}
+
 {% block content %}
 <script>
     let test = JSON.parse("{{ test|escapejs }}");
     let results_url = "{% url 'results' %}"
 </script>
-<div class="question"></div>
+<div class="question_container"></div>
 <script src="{% static 'quiz.js' %}"></script>
 {% endblock %}

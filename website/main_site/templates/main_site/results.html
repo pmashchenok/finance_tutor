@@ -1,25 +1,32 @@
 {% extends "main_site/quiz_layout.html" %}
 
+{% block navbar %}
+    <a href="{% url 'main' %}">Вернуться на главную</a> |
+    <a href="{% url 'start_quiz' %}">Начать заново</a>
+{% endblock %}
+
 {% block content %}
+    <script>
+        let score = JSON.parse("{{ score|escapejs }}")
+    </script>
     <h2>Результаты</h2>
     <div class="results">
         {% if score < 3 %}
-        <p style="color: rgb(185, 20, 20)">{{ score }}/10</p>
-        <p>Комментарий</p>
+        <p id="score" style="color: rgb(185, 20, 20)">{{ score }}/10</p>
         {% elif score < 6 %}
-        <p style="color: rgb(185, 86, 20)">{{ score }}/10</p>
-        <p>Комментарий</p>
+        <p id="score" style="color: rgb(185, 86, 20)">{{ score }}/10</p>
         {% elif score < 9 %}
-        <p style="color: rgb(185, 177, 20)">{{ score }}/10</p>
-        <p>Комментарий</p>
+        <p id="score" style="color: rgb(185, 177, 20)">{{ score }}/10</p>
         {% else %}
-        <p style="color: rgb(58, 185, 20)">{{ score }}/10</p>
-        <p>Комментарий</p>
+        <p id="score" style="color: rgb(58, 185, 20)">{{ score }}/10</p>
         {% endif %}
+        <div class="piechart"></div>
+        <p class="short_comment">Комментарий</p>
     </div>
     <div class="commentary">
         <h2>Рекомендации</h2>
         <p>Текст</p>
     </div>
+    <script src="piechart.js"></script>
 <a href="{% url 'main' %}">На главную</a>
 {% endblock %}
