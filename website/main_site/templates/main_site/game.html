@@ -1,4 +1,7 @@
 {% extends "main_site/game_layout.html" %}
 
 {% block content %}
+<script>
+    let state = JSON.parse("{{ state|escapejs }}")
+</script>
 {% endblock %}
