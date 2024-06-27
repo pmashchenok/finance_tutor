@@ -16,7 +16,7 @@ class ProductType(Enum):
 # (Базовый класс)
 @dataclass
 class Loan:
-    amnt: float            # Сумма
+    amnt: int              # Сумма
     duration: int          # Срок (в месяцах)
     has_furry_zero: bool   # Хочу 0
 
@@ -36,17 +36,14 @@ class MainLoan(Loan):
     # ^ определяется индивидуально, от 25% до 59.5%
     # от 6 до 36 месяцев
     year_interest_2nd_period: float
-    MIN_AGE: int
-    MAX_AGE = 70
 
     is_client: bool  # Тип клиента
 
     # Инициализация
     # TODO: рассмотреть как определяется ставка за первый период
     def __init__(self, type: bool, duration: int, 
-                 amnt: float, has_furry_zero: bool, interest_1st_period: float,
+                 amnt: int, has_furry_zero: bool, interest_1st_period: float,
                  first_period_dur: int):
-        self.set_program(type)
         self.is_client = type
         self.amnt = amnt
         self.duration = duration
@@ -57,38 +54,34 @@ class MainLoan(Loan):
 # Кредит на товар
 @dataclass
 class TargetLoan(Loan):
-    YEAR_INTEREST: float # Устанавливается индивидуально
+    year_interest: float # Устанавливается индивидуально
 
     # Инициализация
     # TODO: должен возвращаться тип Enum, который определяет, почему не смогли выдать кредит 
     # TODO: рассмотреть как определяется ставка за первый период
     def __init__(self, type: bool, duration: int, 
-                 amnt: float, has_furry_zero: bool, interest: float) -> bool:
+                 amnt: int, has_furry_zero: bool, interest: float) -> bool:
         self.amnt = amnt
         self.duration = duration
         self.has_furry_zero = has_furry_zero
-        self.YEAR_INTEREST = interest
-
-        return True
+        self.year_interest = interest
 
 # Кредитная карта
 # (Базовый класс для 2-х типов карт)
 # TODO: спросить про условия беспроцентного периода
 @dataclass
 class CreditCard:
-    debt: float            # Сумма задолженности
-    high_interest: float   # Повышенная ставка по накопительным счетам
-    # TODO: Разобраться с этим ^ подробнее
-    limit: float           # Одобренный лимит
+    debt: int              # Сумма задолженности
+    limit: int             # Одобренный лимит
     is_0_percent: bool     # Беспроцентный период или нет
-    spent_month: float     # Сколько потратили в месяц
+    spent_month: int       # Сколько потратили в месяц
 
     # Коммиссия за снятие наличных
-    def commission_cash(self, op_sum: float) -> float:
+    def commission_cash(self, op_sum: int) -> int:
         return op_sum * 0.059 + 590
     
     # Коммиссия за перевод 
-    def commission_transfer(self, op_sum: float) -> float:
+    def commission_transfer(self, op_sum: int) -> int:
         return op_sum * 0.039 + 390
     
     # Минимальные выплаты

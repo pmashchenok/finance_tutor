@@ -25,6 +25,7 @@ test.question_list = [testing.Question(1, "Тестовый вопрос 1"),
                       testing.Question(10, "Тестовый вопрос 10")]
 test.answers_list = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2]
 character = None
+state = None
 
 
 def index(request):
@@ -103,9 +104,46 @@ def product_input(request):
         work_exp = request.POST["work_exp"]
         client = request.POST["client"] == "y"
         character = gamec.Character(name, age, citizenship, income, work_exp, income, client)
-        context = json.dumps(character.__dict__)
+        context = json.dumps(character.__dict__())
         print(context, file=sys.stderr)
         return render(request, "main_site/product_input.html", context={ "character": context })
 
 def game(request):
-    return render(request, "main_site/game.html")
+    if request.method == "POST":
+        product_name = request.POST["product_name"]
+        product = None
+        product_type = None
+        match product_name: 
+            case "mainloan":
+                product_type = products.ProductType.LOAN_MAIN
+                is_client = character.client
+                duration = request.POST["duration"]
+                amnt = request.POST["amnt"]
+                has_furry_zero = request.POST["hfz"] == "y"
+                # TODO не знаю как это определяется я просто взял
+                # мин. значения с сайта
+                interest_1st_period = 0.25
+                duration_1st_period = 6
+                product = products.MainLoan(is_client, duration, amnt, has_furry_zero,
+                                            interest_1st_period, duration_1st_period)
+            case "targetloan":
+                product_type = products.ProductType.LOAN_TARGET
+                is_client = character.client
+                duration = request.POST["duration"]
+                amnt = request.POST["amnt"]
+                has_furry_zero = request.POST["hfz"] == "y"
+                # TODO 
+                year_interest = 0.25
+                product = products.TargetLoan(is_client, duration, amnt, has_furry_zero, year_interest)
+            case "cc2y":
+                product_type = products.ProductType.CC_2Y
+                # TODO Как определяется предел?
+                product = products.CC2Years(0, 100000, True, 0)
+            case "cc200d":
+                # TODO
+                product_type = products.ProductType.CC_200D
+                product = products.CC200Days(0, 100000, True, 0)
+        state = gamec.GameState(character, product, product_type)
+        context = json.dumps(state.__dict__())
+        print(context)
+        return render(request, "main_site/game.html", context={"state": context})
