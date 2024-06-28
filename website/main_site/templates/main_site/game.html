@@ -4,11 +4,10 @@
 {% block content %}
 <script>
     let state = JSON.parse("{{ state|escapejs }}");
-    let game_url = "{% url 'game' %}";
 </script>
 <div class="other_character"></div>
 <div class="dialogue">
-    <form class="game_input">
+    <form class="game_input" method="POST" action="{% url 'game' %}">
         {% csrf_token %}
         <div class="game_text"></div>
         <div class="inputs"></div>
