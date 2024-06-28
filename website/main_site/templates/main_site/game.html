@@ -1,7 +1,19 @@
 {% extends "main_site/game_layout.html" %}
+{% load static %}
 
 {% block content %}
 <script>
-    let state = JSON.parse("{{ state|escapejs }}")
+    let state = JSON.parse("{{ state|escapejs }}");
+    let game_url = "{% url 'game' %}";
 </script>
+<div class="other_character"></div>
+<div class="dialogue">
+    <form class="game_input">
+        {% csrf_token %}
+        <div class="game_text"></div>
+        <div class="inputs"></div>
+    </form>
+</div>
+<div class="character"></div>
+<script src="{% static 'game.js' %}"></script>
 {% endblock %}
