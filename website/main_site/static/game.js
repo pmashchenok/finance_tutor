@@ -16,16 +16,15 @@ game_text_div.innerHTML = `
 `
 
 if (cur_event.type == "CHOICE") {
+    var inp = Object.entries(cur_event.inputs)[0];
+    inputs_div.innerHTML = `
+        <button name="game_input" class="choice_btn" type="submit" value="${inp[1]}">${inp[0]}</button>
+    `
+} else {
     var inps = cur_event.inputs;
     for (var propt in inps) {
         inputs_div.innerHTML += `
             <button name="game_input" class="input_btn" type="submit" value="${inps[propt]}">${propt}</button>
         `
     }
-} else {
-    inputs_div.innerHTML = `
-        <label for="input">${Object.keys(cur_event.inputs)[0]}</label>
-        <input class="input_txt" type="number" name="game_input" />
-        <button type="submit">ОК</button>
-    `
 }

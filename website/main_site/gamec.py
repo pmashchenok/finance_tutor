@@ -125,6 +125,26 @@ class GameState:
         state.event = first_event
         return state
     
+    def get_event(self):
+        conn = sqlite3.connect("events.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Events ORDER BY RANDOM() LIMIT 1")
+        results = cursor.fetchone()
+        if results[0] == "CHOICE":
+            ev_inputs = {results[3]: results[4]}
+        else:
+            ev_inputs = {results[3]: results[4], 
+                      results[5]: results[6],
+                      results[7]: results[8]}
+        ev_type_str = results[0]
+        ev_text = results[1]
+        ev_char = results[2]
+        match ev_type_str:
+            case "INPUT":
+                ev_type = EventType.INPUT
+            case "CHOICE":
+                ev_type = EventType.CHOICE
+        return Event(ev_type, ev_text, ev_char, ev_inputs)
+
     def progress(self, game_input):
-        print(game_input)
-        self.event = Event(EventType.INPUT, "Новое событие", "Ассистент", {"OK": "ok"})
+        self.event = self.get_event()
