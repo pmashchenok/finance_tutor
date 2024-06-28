@@ -104,10 +104,10 @@ def product_input(request):
     global character
     if request.method == "POST":
         name = request.POST["name"]
-        age = request.POST["age"]
+        age = int(request.POST["age"])
         citizenship = request.POST["ctzn"]
-        income = request.POST["income"]
-        work_exp = request.POST["work_exp"]
+        income = int(request.POST["income"])
+        work_exp = int(request.POST["work_exp"])
         client = request.POST["client"] == "y"
         character = gamec.Character(name, age, citizenship, income, work_exp, income, client)
         context = json.dumps(character.__dict__())
@@ -121,8 +121,8 @@ def game(request):
             state = gamec.GameState.start(character, request)
             state_context = json.dumps(state.__dict__())
             print(state_context)
-        elif state.play_state is gamec.PlayState.PLAYING:
-            game_input = request.POST["game_input"]
+        else:
+            game_input = int(request.POST["game_input"])
             state.progress(game_input)
             state_context = json.dumps(state.__dict__())
         return render(request, "main_site/game.html", context={"state": state_context})

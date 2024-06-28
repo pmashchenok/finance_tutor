@@ -1,14 +1,22 @@
 // state: GameState from gamec.py
 // game_url: url of the "game.html" page
 
-let char = state.char;
-let product = state.product;
-let cur_event = state.event;
+var char = state.char;
+var product = state.product;
+var cur_event = state.event;
 
-let other_character = document.getElementsByClassName("other_character")[0];
-let character = document.getElementsByClassName("character")[0];
-let game_text_div = document.getElementsByClassName("game_text")[0];
-let inputs_div = document.getElementsByClassName("inputs")[0];
+var other_character = document.getElementsByClassName("other_character")[0];
+var character = document.getElementsByClassName("character")[0];
+var game_text_div = document.getElementsByClassName("game_text")[0];
+var inputs_div = document.getElementsByClassName("inputs")[0];
+var info_div = document.getElementsByClassName("info")[0];
+
+info_div.innerHTML = `
+    <h6>Информация</h6>
+    <p>Баланс: ${char.balance}</p>
+    <p>Сумма задолженности: ${state.debt}</p>
+    <p>Месяц: ${state.turn}/${product.duration}</p>
+`
 
 game_text_div.innerHTML = `
     <h6>${cur_event.character}</h6>
@@ -28,3 +36,11 @@ if (cur_event.type == "CHOICE") {
         `
     }
 }
+
+other_character.innerHTML = `
+    <img src="${cur_event.character}.png">
+`
+
+character.innerHTML = `
+    <img src="character.png">
+`

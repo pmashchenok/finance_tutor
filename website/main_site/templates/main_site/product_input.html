@@ -23,3 +23,8 @@
 </div>
 <script src="{% static 'product.js' %}"></script>
 {% endblock %}
+
+{% block navbar %}
+    <a href="{% url 'main' %}">На главную</a> |
+    <a href="{% url 'start_game' %}">Начать заново</a> 
+{% endblock %}

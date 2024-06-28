@@ -10,18 +10,19 @@
         </div>
         <div id="input_field">
             <label for="age">Возраст </label>
-            <input type="text" name="age" required/>
+            <input type="number" name="age" required/>
         </div>
         <div id="input_field">
             <label for="ctzn">Гражданство </label>
             <input type="text" name="ctzn" required/>
+        </div>
         <div id="input_field">
             <label for="income">Месячный доход </label>
-            <input type="text" name="income" required/>
+            <input type="number" name="income" required/>
         </div>
         <div id="input_field">
             <label for="work_exp">Стаж работы (на текущем месте работы) </label>
-            <input type="text" name="work_exp" required/>
+            <input type="number" name="work_exp" required/>
         </div>
         <div id="input_field">
             <label for="client">Являетесь ли Вы клиентом КБ Ренессанс? </label>
@@ -33,4 +34,9 @@
         <button type="submit">Далее</button>
    </form>
 </div>
+{% endblock %}
+
+{% block navbar %}
+    <a href="{% url 'main' %}">На главную</a> |
+    <a href="{% url 'start_game' %}">Начать заново</a> 
 {% endblock %}

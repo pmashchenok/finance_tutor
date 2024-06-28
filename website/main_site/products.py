@@ -35,7 +35,7 @@ class MainLoan(Loan):
     first_period_dur: int 
     # ^ определяется индивидуально, от 25% до 59.5%
     # от 6 до 36 месяцев
-    year_interest_2nd_period: float
+    year_interest_2nd_period = 0.039
 
     is_client: bool  # Тип клиента
 
@@ -50,6 +50,12 @@ class MainLoan(Loan):
         self.has_furry_zero = has_furry_zero
         self.year_interest_1st_period = interest_1st_period
         self.first_period_dur = first_period_dur
+
+    def set_year_interest(self, cur_month: int):
+        if self.first_period_dur <= cur_month:
+            self.year_interest = self.year_interest_1st_period
+        else:
+            self.year_interest = self.year_interest_2nd_period
 
 # Кредит на товар
 @dataclass
@@ -89,7 +95,7 @@ class CreditCard:
         result = self.balance * 0.02
         if self.is_0_percent:
             result += 0.01 * self.limit
-        if result < 200:
+        if result < 200 and result > 0:
             return 200
         else:
             return result

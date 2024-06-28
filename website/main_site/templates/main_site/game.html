@@ -14,5 +14,11 @@
     </form>
 </div>
 <div class="character"></div>
+<div class="info"></div>
 <script src="{% static 'game.js' %}"></script>
+{% endblock %}
+
+{% block navbar %}
+    <a href="{% url 'main' %}">На главную</a> |
+    <a href="{% url 'start_game' %}">Начать заново</a> 
 {% endblock %}
