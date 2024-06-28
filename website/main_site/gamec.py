@@ -21,6 +21,13 @@ class Event:
     text: str
     character: str
 
+    def __dict__(self):
+        return {
+            "type": "input" if self.type is EventType.INPUT else "choice",
+            "text": self.text,
+            "character": self.character,
+        }
+
 @dataclass
 class Character:
     name: str
@@ -71,6 +78,6 @@ class GameState:
             "debt": self.debt,
             "turn": self.turn,
             "play_state": self.play_state.__dict__["_name_"],
-            "event": self.event,
+            "event": self.event.__dict__(),
             "event_correctly_solved": self.event_correctly_solved,
         } 

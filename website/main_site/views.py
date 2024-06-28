@@ -89,12 +89,18 @@ def results(request):
         return render(request, "main_site/results.html", context={"score": test.score})
     
 def start_game(request):
+    global state
+    state = None
     return render(request, "main_site/start_game.html")
 
 def chara_input(request):
+    global state
+    state = None
     return render(request, "main_site/chara_input.html")
 
 def product_input(request):
+    global state
+    state = None
     global character
     if request.method == "POST":
         name = request.POST["name"]
@@ -109,41 +115,47 @@ def product_input(request):
         return render(request, "main_site/product_input.html", context={ "character": context })
 
 def game(request):
+    global state
     if request.method == "POST":
-        product_name = request.POST["product_name"]
-        product = None
-        product_type = None
-        match product_name: 
-            case "mainloan":
-                product_type = products.ProductType.LOAN_MAIN
-                is_client = character.client
-                duration = request.POST["duration"]
-                amnt = request.POST["amnt"]
-                has_furry_zero = request.POST["hfz"] == "y"
-                # TODO не знаю как это определяется я просто взял
-                # мин. значения с сайта
-                interest_1st_period = 0.25
-                duration_1st_period = 6
-                product = products.MainLoan(is_client, duration, amnt, has_furry_zero,
-                                            interest_1st_period, duration_1st_period)
-            case "targetloan":
-                product_type = products.ProductType.LOAN_TARGET
-                is_client = character.client
-                duration = request.POST["duration"]
-                amnt = request.POST["amnt"]
-                has_furry_zero = request.POST["hfz"] == "y"
-                # TODO 
-                year_interest = 0.25
-                product = products.TargetLoan(is_client, duration, amnt, has_furry_zero, year_interest)
-            case "cc2y":
-                product_type = products.ProductType.CC_2Y
-                # TODO Как определяется предел?
-                product = products.CC2Years(0, 100000, True, 0)
-            case "cc200d":
-                # TODO
-                product_type = products.ProductType.CC_200D
-                product = products.CC200Days(0, 100000, True, 0)
-        state = gamec.GameState(character, product, product_type)
-        context = json.dumps(state.__dict__())
-        print(context)
-        return render(request, "main_site/game.html", context={"state": context})
+        if state is None:
+            product_name = request.POST["product_name"]
+            product = None
+            product_type = None
+            match product_name: 
+                case "mainloan":
+                    product_type = products.ProductType.LOAN_MAIN
+                    is_client = character.client
+                    duration = request.POST["duration"]
+                    amnt = request.POST["amnt"]
+                    has_furry_zero = request.POST["hfz"] == "y"
+                    # TODO не знаю как это определяется я просто взял
+                    # мин. значения с сайта
+                    interest_1st_period = 0.25
+                    duration_1st_period = 6
+                    product = products.MainLoan(is_client, duration, amnt, has_furry_zero,
+                                                interest_1st_period, duration_1st_period)
+                case "targetloan":
+                    product_type = products.ProductType.LOAN_TARGET
+                    is_client = character.client
+                    duration = request.POST["duration"]
+                    amnt = request.POST["amnt"]
+                    has_furry_zero = request.POST["hfz"] == "y"
+                    # TODO 
+                    year_interest = 0.25
+                    product = products.TargetLoan(is_client, duration, amnt, has_furry_zero, year_interest)
+                case "cc2y":
+                    product_type = products.ProductType.CC_2Y
+                    # TODO Как определяется предел?
+                    product = products.CC2Years(0, 100000, True, 0)
+                case "cc200d":
+                    # TODO
+                    product_type = products.ProductType.CC_200D
+                    product = products.CC200Days(0, 100000, True, 0)
+            state = gamec.GameState(character, product, product_type)
+            state.event = gamec.Event(gamec.EventType.CHOICE, "Это тестовое событие! :)", "Ассистент")
+            state_context = json.dumps(state.__dict__())
+            print(state_context)
+            return render(request, "main_site/game.html", context={"state": state_context})
+        elif state.play_state is gamec.PlayState.PLAYING:
+            state_context = json.dumps(state.__dict__())
+            return render(request, "main_site/game.html", context={"state": state_context})
