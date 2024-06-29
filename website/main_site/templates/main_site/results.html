@@ -1,4 +1,5 @@
 {% extends "main_site/quiz_layout.html" %}
+{% load static %}
 
 {% block navbar %}
     <a href="{% url 'main' %}">Вернуться на главную</a> |
@@ -8,6 +9,7 @@
 
 <!-- Тут из-за использования переменных из шаблонов Django вылезает куча ошибок :( -->
 {% block content %}
+    <script> let score = JSON.parse("{{ score|escapejs }}"); </script>
     <h2>Результаты</h2>
     <div class="results">
         {% if score < 3 %}
@@ -61,8 +63,9 @@
         {% endif %}
         <div class="piechart"></div>
     </div>
-    <div class="commentary">
+    <div>
         <h2>Комментарий</h2>
-        <p>Текст</p>
+        <p id="commentary">Текст</p>
     </div>
+    <script src="{% static 'results.js' %}"></script>
 {% endblock %}
