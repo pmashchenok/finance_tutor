@@ -108,6 +108,7 @@ class GameState:
                 product = products.MainLoan(is_client, duration, amnt, has_furry_zero,
                                             interest_1st_period, duration_1st_period)
                 debt = amnt
+                product.set_year_interest(0)
             case "targetloan":
                 product_type = products.ProductType.LOAN_TARGET
                 is_client = character.client

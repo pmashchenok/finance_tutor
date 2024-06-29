@@ -4,6 +4,7 @@
 {% block content %}
 <script>
     let state = JSON.parse("{{ state|escapejs }}");
+    let annuity = JSON.parse("{{ annuity|escapejs }}")
 </script>
 <div class="other_character"></div>
 <div class="dialogue">
@@ -15,10 +16,15 @@
 </div>
 <div class="character"></div>
 <div class="info"></div>
-<script src="{% static 'game.js' %}"></script>
 {% endblock %}
 
 {% block navbar %}
-    <a href="{% url 'main' %}">На главную</a> |
-    <a href="{% url 'start_game' %}">Начать заново</a> 
+<a href="{% url 'main' %}">На главную</a> |
+<a href="{% url 'start_game' %}">Начать заново</a> | 
+<button onclick="showHelp();" type="button" id="help">Справка</button> 
+{% endblock %}
+
+{% block help %}
+<div class="help"></div>
+<script src="{% static 'game.js' %}"></script>
 {% endblock %}

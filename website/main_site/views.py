@@ -125,4 +125,5 @@ def game(request):
             game_input = int(request.POST["game_input"])
             state.progress(game_input)
             state_context = json.dumps(state.__dict__())
-        return render(request, "main_site/game.html", context={"state": state_context})
+        return render(request, "main_site/game.html", context={"state": state_context, 
+                                                               "annuity": str(state.product.annuity_payment())})
