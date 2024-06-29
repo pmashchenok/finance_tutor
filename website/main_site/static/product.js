@@ -16,6 +16,7 @@ option.addEventListener("change", function() {
     choice = option.value;
     createInputDetails(choice);
 }) 
+createInputDetails("mainloan");
 
 function createInputDetails(choice) {
     switch(choice) {
@@ -23,14 +24,38 @@ function createInputDetails(choice) {
             if (checkCharaInfoML()) {
                 input_details.innerHTML = `
                     <div id="input_field">
-                        <label for="duration">Продолжительность кредита</label>
+                        <label for="duration"><p id="duration_label">Продолжительность кредита: </p></label>
                         <input type="range" min="12" max="84" step="12" id="slider" name="duration" required />
-                        <p id="duration_label"></p>
+                        <div class="ticks">
+                            <p>12</p>
+                            <p>24</p>
+                            <p>36</p>
+                            <p>48</p>
+                            <p>60</p>
+                            <p>72</p>
+                            <p>84</p>
+                        </div>
                     </div>
                     <div id="input_field">
-                        <label for="amnt">Сумма кредита</label>
+                        <label for="amnt"><p id="amnt_label">Сумма кредита</p></label>
                         <input type="range" min="30000" max="2000000" step="10000" id="slider" name="amnt" required />
-                        <p id="amnt_label"></p>
+                        <div class="ticks amnt_ticks">
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                        </div>
                     </div>
                     <div id="input_field">
                         <label for="hfz">Акция "Хочу 0"?</label>
@@ -44,6 +69,8 @@ function createInputDetails(choice) {
                 var slider_amnt = document.getElementsByName("amnt")[0];
                 if (character.client) {
                     slider_amnt.min = 30000;
+                    var ticks_div = document.getElementsByClassName("amnt_ticks");
+                    ticks_div.innerHTML += `<p></p><p></p>`;
                 } else {
                     slider_amnt.min = 50000;
                 }
@@ -52,15 +79,38 @@ function createInputDetails(choice) {
         case "targetloan":
             if (checkCharaInfoTL()) {
                 input_details.innerHTML = `
-                <div id="input_field">
-                        <label for="duration">Продолжительность кредита</label>
+                    <div id="input_field">
+                        <label for="duration"><p id="duration_label">Продолжительность кредита</p></label>
                         <input type="range" min="1" max="60" id="slider" name="duration" required />
-                        <p id="duration_label"></p>
+                        <div class="ticks">
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                        </div>
                     </div>
                     <div id="input_field">
-                        <label for="amnt">Сумма кредита</label>
-                        <input type="range" min="1500" max="1500000" step="10000" id="slider" name="amnt" required />
-                        <p id="amnt_label"></p>
+                        <label for="amnt"><p id="amnt_label">Сумма кредита</p></label>
+                        <input type="range" min="0" max="1500000" step="500" class="restricted" id="slider" name="amnt" required />
+                        <div class="ticks">
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                        </div>
                     </div>
                     <div id="input_field">
                         <label for="hfz">Акция "Хочу 0"?</label>
@@ -70,6 +120,12 @@ function createInputDetails(choice) {
                         </select>
                     </div>
                 `;
+                var slider = document.getElementsByClassName("restricted")[0];
+                slider.addEventListener("input", () => {
+                    if (slider.value < 1500) {
+                        slider.value = 1500;
+                    } 
+                });
                 setUpdateLabel();
             }
             break;
@@ -79,18 +135,18 @@ function createInputDetails(choice) {
 function setUpdateLabel() {
     var duration = document.getElementsByName("duration")[0];
     var duration_label = document.getElementById("duration_label");
-    duration_label.innerText = `${duration.value}`;
+    duration_label.innerText = `Продолжительность кредита: ${duration.value} мес.`;
     duration.oninput = null;
     duration.addEventListener("input", function() {
-        duration_label.innerText = `${duration.value}`;
+        duration_label.innerText = `Продолжительность кредита: ${duration.value} мес.`;
     })
 
     var amnt = document.getElementsByName("amnt")[0];
     var amnt_label = document.getElementById("amnt_label");
-    amnt_label.innerText = `${amnt.value}`;
+    amnt_label.innerText = `Сумма кредита: ${amnt.value}₽`;
     amnt.oninput = null;
     amnt.addEventListener("input", function() {
-        amnt_label.innerText = `${amnt.value}`;
+        amnt_label.innerText = `Сумма кредита: ${amnt.value}₽`;
     })
 }
 

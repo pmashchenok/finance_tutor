@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<div class="main">
 <script>
     let state = JSON.parse("{{ state|escapejs }}");
     let annuity = JSON.parse("{{ annuity|escapejs }}")
@@ -16,6 +17,7 @@
 </div>
 <div class="character"></div>
 <div class="info"></div>
+</div>
 {% endblock %}
 
 {% block navbar %}

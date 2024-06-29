@@ -6,9 +6,10 @@
     let character = JSON.parse("{{ character|escapejs }}");
 </script>
 <div class="chara_input">
+    <center><h2>Ввод продукта</h2></center>
     <form method="POST" action="{% url 'game' %}">
     {% csrf_token %}
-        <div id="input_product">
+        <div id="input_field">
             <label for="product_name">Выберите желаемый продукт </label>
             <select name="product_name" required>
                 <option value="mainloan">Кредит на любые цели</option>
