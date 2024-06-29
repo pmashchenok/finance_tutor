@@ -58,7 +58,7 @@ class Character:
 
 class GameState:
     char: Character
-    product: products.CC200Days | products.CC2Years | products.MainLoan | products.TargetLoan
+    product: products.MainLoan | products.TargetLoan
     product_type: products.ProductType
     debt: int
     turn: int 
@@ -118,16 +118,6 @@ class GameState:
                 year_interest = 0.25
                 product = products.TargetLoan(is_client, duration, amnt, has_furry_zero, year_interest)
                 debt = amnt
-            case "cc2y":
-                product_type = products.ProductType.CC_2Y
-                # TODO Как определяется предел?
-                product = products.CC2Years(0, 10000, True, 0)
-                debt = 0
-            case "cc200d":
-                # TODO
-                product_type = products.ProductType.CC_200D
-                product = products.CC200Days(0, 10000, True, 0)
-                debt = 0
         state = GameState(character, product, product_type)
         first_event = Event(EventType.CHOICE, "Поздравляю с получением продукта! Не забывайте совершать ежемесячные выплаты. Справка всегда доступна. И тд",
                             "Ассистент", {"OK": "0"})
@@ -174,19 +164,8 @@ class GameState:
 
     def pay_credit_event(self):
         ev_type = EventType.CHOICE
-        match self.product_type:
-            case self.product_type if (self.product_type is products.ProductType.LOAN_MAIN or
-                                       self.product_type is products.ProductType.LOAN_TARGET):
-                credit_pay = self.product.annuity_payment()
-                ev_text = f"Вам также необходимо оплатить {credit_pay}₽ за кредит."
-            case self.product_type if (self.product_type is products.ProductType.CC_200D or
-                                       self.product_type is products.ProductType.LOAN_TARGET):
-                # TODO
-                credit_pay = self.product.min_payment()
-                if credit_pay > 0:
-                    ev_text = f"Вам также необходимо оплатить {credit_pay}₽ за кредитную карту."
-                else:
-                    ev_text = "В этом месяце за кредитную карту нечего платить."
+        credit_pay = self.product.annuity_payment()
+        ev_text = f"Вам также необходимо оплатить {credit_pay}₽ за кредит."
         ev_char = "Ассистент"
         ev_inputs = {"OK": -credit_pay}
         self.debt -= credit_pay

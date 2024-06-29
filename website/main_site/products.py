@@ -9,8 +9,6 @@ from enum import Enum
 class ProductType(Enum):
     LOAN_MAIN = 1
     LOAN_TARGET = 2
-    CC_2Y = 3
-    CC_200D = 4
 
 # Кредит
 # (Базовый класс)
@@ -71,44 +69,3 @@ class TargetLoan(Loan):
         self.duration = duration
         self.has_furry_zero = has_furry_zero
         self.year_interest = interest
-
-# Кредитная карта
-# (Базовый класс для 2-х типов карт)
-# TODO: спросить про условия беспроцентного периода
-@dataclass
-class CreditCard:
-    debt: int              # Сумма задолженности
-    limit: int             # Одобренный лимит
-    is_0_percent: bool     # Беспроцентный период или нет
-    spent_month: int       # Сколько потратили в месяц
-
-    # Коммиссия за снятие наличных
-    def commission_cash(self, op_sum: int) -> int:
-        return op_sum * 0.059 + 590
-    
-    # Коммиссия за перевод 
-    def commission_transfer(self, op_sum: int) -> int:
-        return op_sum * 0.039 + 390
-    
-    # Минимальные выплаты
-    def min_payment(self):
-        result = self.balance * 0.02
-        if self.is_0_percent:
-            result += 0.01 * self.limit
-        if result < 200 and result > 0:
-            return 200
-        else:
-            return int(result)
-
-# Кредитная карта 2 года без %
-@dataclass
-class CC2Years(CreditCard):
-    # Годовые ставки (вне льготного периода):
-    INTEREST_BUY = 0.189   # за оплату товаров и услуг
-    INTEREST_CASH = 0.289  # при снятии наличных
-
-@dataclass
-class CC200Days(CreditCard):
-     # Годовые ставки (вне льготного периода):
-    INTEREST_BUY = 0.289   # за оплату товаров и услуг
-    INTEREST_CASH = 0.289  # при снятии наличных

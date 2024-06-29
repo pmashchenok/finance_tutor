@@ -73,12 +73,6 @@ function createInputDetails(choice) {
                 setUpdateLabel();
             }
             break;
-        case "cc2y":
-            checkCharaInfoCC();
-            break;
-        case "cc200d":
-            checkCharaInfoCC();
-            break;
     }
 }
 
@@ -121,17 +115,6 @@ function checkCharaInfoML() {
 
 function checkCharaInfoTL() {
     if (character.age < 20 || character.age > 80) {
-        input_details.innerHTML = `
-            <p>Внимание: Ваш возраст не соответствует требованиям</p>
-        `;
-        button.disabled = true;
-        return false;
-    }
-    return true;
-}
-
-function checkCharaInfoCC() {
-    if (character.age < 20 || character.age > 70) {
         input_details.innerHTML = `
             <p>Внимание: Ваш возраст не соответствует требованиям</p>
         `;
