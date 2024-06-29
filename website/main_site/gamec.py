@@ -176,7 +176,7 @@ class GameState:
         ev_type = EventType.END
         ev_text = "Поздравляем, Вы вовремя выплатили кредит!"
         ev_char = "Ассистент"
-        ev_inputs = {"OK": 0}
+        ev_inputs = {"Вернуться на главную": 0}
         return Event(ev_type, ev_text, ev_char, ev_inputs)
 
     def lose_event(self):
@@ -186,7 +186,7 @@ class GameState:
         elif self.turn == self.product.duration and self.debt > 0:
             ev_text = "К сожалению, Вы не успели выплатить кредит!"
         ev_char = "Ассистент"
-        ev_inputs = {"OK": 0}
+        ev_inputs = {"Вернуться на главную": 0}
         return Event(ev_type, ev_text, ev_char, ev_inputs)
 
     def play_state(self):

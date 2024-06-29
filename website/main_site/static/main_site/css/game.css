@@ -159,19 +159,60 @@ a {
     width: 75%;
 }
 
-.other_character, .character {
+.other_character, .character, .dialogue, .info, .help {
+    box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
+    background: white;
+    padding: 1%;
+}
+
+.other_character, .character, .help {
     border: 3px solid rgb(197, 197, 197);
     overflow: hidden;
+    border-radius: 16px;
 }
 
-.dialogue {
+.help {
+    display: none;
+    width: 50%;
+}
+
+.help img {
+    display: inline;
+}
+
+.help img#formula {
+    height: 48px;
+}
+
+.help img#small {
+    height: 10px;
+}
+
+.help img#big {
+    height: 14px;
+}
+
+.dialogue, .info {
     border: 3px solid #ff0078;
     border-radius: 16px;
-    background: linear-gradient(rgb(255, 255, 255), rgb(223, 223, 223));
+    background: white; 
 }
 
-.info {
-    border: 3px solid rgb(255, 0, 0);
+.game_input {
+    height: 100%;
+}
+
+#stat {
+    font-size: 110%;
+    color: #ff0078;
+}
+
+.input_btn, .choice_btn {
+    font-size: 125%;
+}
+
+button#help {
+    font-size: 150%;
 }
 
 .navbar {

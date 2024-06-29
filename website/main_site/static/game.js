@@ -13,14 +13,14 @@ var info_div = document.getElementsByClassName("info")[0];
 var help_div = document.getElementsByClassName("help")[0];
 
 info_div.innerHTML = `
-    <h6>Информация</h6>
-    <p>Баланс: ${char.balance}</p>
-    <p>Сумма задолженности: ${state.debt}</p>
-    <p>Месяц: ${state.turn}/${product.duration}</p>
+    <h2>Информация</h2>
+    <p>Баланс: <br><span id="stat">${char.balance}</span></p>
+    <p>Сумма задолженности: <br><span id="stat">${state.debt}</span></p>
+    <p>Месяц: <br><span id="stat">${state.turn}/${product.duration}</span></p>
 `;
 
 game_text_div.innerHTML = `
-    <h6>${cur_event.character}</h6>
+    <h2>${cur_event.character}</h2>
     <p>${cur_event.text}</p>
 `;
 
@@ -29,13 +29,18 @@ if (cur_event.type == "CHOICE") {
     inputs_div.innerHTML = `
         <button name="game_input" class="choice_btn" type="submit" value="${inp[1]}">${inp[0]}</button>
     `;
-} else {
+} else if (cur_event.type == "INPUT") {
     var inps = cur_event.inputs;
     for (var propt in inps) {
         inputs_div.innerHTML += `
             <button name="game_input" class="input_btn" type="submit" value="${inps[propt]}">${propt}</button>
         `;
     }
+} else {
+    var inp = Object.entries(cur_event.inputs)[0];
+    inputs_div.innerHTML = `
+        <a href="${home_url}"><button name="game_input" class="choice_btn" type="button">${inp[0]}</button></a>
+    `;
 }
 
 other_character.innerHTML = `
@@ -47,32 +52,35 @@ character.innerHTML = `
 `;
 
 function showHelp() {
-    var product_str = state.product_type == "LOAN_MAIN" ? "кредит на любые цели" : "кредит на покупку товара"
-    help_div.innerHTML = `
-        <h6>Справка</h6>
-        <p>Ваш продукт: ${product_str} на сумму ${state.product.amnt}₽, 
-        продолжительность ${state.product.duration} мес.,<br>
-    `
-
-    if (state.product_type == "LOAN_MAIN") {
-        help_div.innerHTML += `
-            Процентная ставка первого периода кредита: ${state.product.year_interest_1st_period*100}% 
-            (${state.product.first_period_dur} мес.), процентная ставка второго периода кредита: ${state.product.year_interest_2nd_period*100}%<br>
-            Текущая ставка: ${state.product.year_interest*100}%<br>
+    if (help_div.style.display === "none") {
+        help_div.style.display = "block";
+        var product_str = state.product_type == "LOAN_MAIN" ? "кредит на любые цели" : "кредит на покупку товара"
+        help_div.innerHTML = `
+            <h2>Справка</h2>
+            <p>Ваш продукт: ${product_str} на сумму ${state.product.amnt}₽, 
+            продолжительность ${state.product.duration} мес.<br>
         `
+
+        if (state.product_type == "LOAN_MAIN") {
+            help_div.innerHTML += `
+                Процентная ставка первого периода кредита: ${state.product.year_interest_1st_period*100}% 
+                (${state.product.first_period_dur} мес.), процентная ставка второго периода кредита: ${state.product.year_interest_2nd_period*100}%.<br>
+                Текущая ставка: ${state.product.year_interest*100}%.<br>
+            `
+        } else {
+            help_div.innerHTML += `
+                Процентная ставка: ${state.product.year_interest*100}%.<br>
+            `
+        }
+
+        help_div.innerHTML += `
+            Ежемесячные платежи вычисляются по формуле: <br><img src="${ann_url}" id="formula">,
+            где <img id="big" src="${a_url}"> — ежемесячный платеж, <img id="big" src="${p_url}"> — сумма кредита, <img id="small" src="${r_url}"> — 
+            месячная ставка (годовая ставка, поделенная на 12), <img id="small" src="${n_url}"> — срок кредита в месяцах.<br>
+            Таким образом, Ваш ежемесячный платеж составляет ${annuity}₽.</p>
+        `;
     } else {
-        help_div.innerHTML += `
-            Процентная ставка: ${state.product.year_interest*100}%<br>
-        `
+        help_div.innerHTML = ``;
+        help_div.style.display = "none";
     }
-
-    help_div.innerHTML += `
-        Ежемесячные платежи вычисляются по формуле: <img src="static/annuity.png"><br>
-        Таким образом, Ваш ежемесячный платеж составляет ${annuity}₽</p>
-        <button onclick="hideHelp();">OK</button>
-    `;
-}
-
-function hideHelp() {
-    help_div.innerHTML = ``;
 }

@@ -5,7 +5,13 @@
 <div class="main">
 <script>
     let state = JSON.parse("{{ state|escapejs }}");
-    let annuity = JSON.parse("{{ annuity|escapejs }}")
+    let annuity = JSON.parse("{{ annuity|escapejs }}");
+    let ann_url = "{% static 'annuity.png' %}";
+    let a_url = "{% static 'a.png' %}";
+    let p_url = "{% static 'p.png' %}";
+    let r_url = "{% static 'r.png' %}";
+    let n_url = "{% static 'n.png' %}";
+    let home_url = "{% url 'main' %}";
 </script>
 <div class="other_character"></div>
 <div class="dialogue">
@@ -22,11 +28,11 @@
 
 {% block navbar %}
 <a href="{% url 'main' %}">На главную</a> |
-<a href="{% url 'start_game' %}">Начать заново</a> | 
-<button onclick="showHelp();" type="button" id="help">Справка</button> 
+<a href="{% url 'start_game' %}">Начать заново</a>
 {% endblock %}
 
 {% block help %}
+<button onclick="showHelp();" type="button" id="help">Справка</button> 
 <div class="help"></div>
 <script src="{% static 'game.js' %}"></script>
 {% endblock %}
