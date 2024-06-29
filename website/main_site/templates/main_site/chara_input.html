@@ -3,6 +3,7 @@
 {% block content %}
 <div class="chara_input">
     <center><h2>Создание персонажа</h2></center>
+    <p>Введите данные о Вашем персонаже:</p>
     <form method="POST" action="{% url 'product_input' %}">
     {% csrf_token %}
         <div id="input_field">

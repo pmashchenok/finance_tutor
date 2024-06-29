@@ -20,6 +20,9 @@ class MonthStatus(Enum):
     END1 = 3
     END2 = 4
 
+def cut_off_add(a, b):
+    return a + b if a + b > 0 else 0
+
 @dataclass 
 class Event:
     type: EventType
@@ -120,8 +123,16 @@ class GameState:
                 product = products.TargetLoan(is_client, duration, amnt, has_furry_zero, year_interest)
                 debt = amnt
         state = GameState(character, product, product_type)
-        first_event = Event(EventType.CHOICE, "Поздравляю с получением продукта! Не забывайте совершать ежемесячные выплаты. Справка всегда доступна. И тд",
-                            "Ассистент", {"OK": "0"})
+        first_ev_text = """
+            Поздравляем с успешным получением кредита! Не забывайте про ежемесячные выплаты по кредиту,
+            а также по коммунальным услугам и другим потребностям (будут в конце месяца). <br><br>
+            Каждый месяц происходит от 3-х до 5-и случайных событий двух типов: <br>
+            1. Выбор из 3-х вариантов <br>
+            2. "Форс-мажор" (выбор отсутствует) <br>
+            Выбирайте так, чтобы в случае форс-мажора у Вас остались деньги на коммунальные услуги и выплату по кредиту. <br><br>
+            Удачи!
+        """
+        first_event = Event(EventType.CHOICE, first_ev_text, "Ассистент", {"OK": "0"})
         state.event = first_event
         state.debt = debt
         state.turn = 0
@@ -204,7 +215,7 @@ class GameState:
     def progress(self, game_input):
         if self.product_type is products.ProductType.LOAN_MAIN:
             self.product.set_year_interest(self.turn)
-        self.char.balance += game_input
+        self.char.balance = cut_off_add(self.char.balance, game_input)
 
         if self.play_state() is PlayState.WIN:
             self.event = self.win_event()

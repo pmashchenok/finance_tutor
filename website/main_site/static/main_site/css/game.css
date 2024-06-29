@@ -155,8 +155,9 @@ a {
 
 .main {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr 1fr;
+    grid-template-columns: 1fr 20px 3fr 1fr 1fr;
     width: 75%;
+    align-items: center;
 }
 
 .other_character, .character, .dialogue, .info, .help {
@@ -169,6 +170,10 @@ a {
     border: 3px solid rgb(197, 197, 197);
     overflow: hidden;
     border-radius: 16px;
+}
+
+.other_character, .character {
+    height: 256px;
 }
 
 .help {
@@ -196,6 +201,16 @@ a {
     border: 3px solid #ff0078;
     border-radius: 16px;
     background: white; 
+}
+
+.arrow {
+    overflow: hidden;
+    position: relative;
+    float: left;
+    right: -1px;
+    border-right: 20px solid #ff0078;
+    border-top: 20px solid transparent;
+    border-bottom: 5px solid transparent;
 }
 
 .game_input {
