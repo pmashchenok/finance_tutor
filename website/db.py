@@ -4,6 +4,18 @@ import sqlite3
 conn = sqlite3.connect("events.db")
 cursor = conn.cursor()
 
+cursor.execute("""CREATE TABLE Events(
+               type TEXT,
+               text TEXT,
+               char TEXT,
+               label1 TEXT,
+               value1 INTEGER,
+               label2 TEXT,
+               value2 INTEGER,
+               label3 TEXT,
+               value3 INTEGER
+               );""")
+
 lines = []
 llen = 0
 cur = 0
@@ -11,9 +23,7 @@ with open("events.txt") as file:
     lines = file.readlines()
     llen = len(lines)
 
-print(llen)
 while cur < llen:
-    print(cur)
     event_buff = []
     line = ""
     while line != "*":

@@ -26,7 +26,7 @@ class Loan:
         n = self.duration
         x = (1 + r)**n
 
-        return P*(r*x) / (x-1)
+        return int(P*(r*x) / (x-1))
 
 # Кредит на любые цели
 @dataclass
@@ -91,14 +91,14 @@ class CreditCard:
         return op_sum * 0.039 + 390
     
     # Минимальные выплаты
-    def min_payment(self) -> float:
+    def min_payment(self):
         result = self.balance * 0.02
         if self.is_0_percent:
             result += 0.01 * self.limit
         if result < 200 and result > 0:
             return 200
         else:
-            return result
+            return int(result)
 
 # Кредитная карта 2 года без %
 @dataclass

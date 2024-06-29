@@ -133,7 +133,7 @@ class GameState:
                             "Ассистент", {"OK": "0"})
         state.event = first_event
         state.debt = debt
-        state.turn = 1
+        state.turn = 0
         return state
     
     def get_event(self):
@@ -166,8 +166,8 @@ class GameState:
     
     def pay_bills_event(self):
         ev_type = EventType.CHOICE
-        bills = self.char.income / 10
-        ev_text = f"Вам необходимо оплатить {bills}₽ за коммунальные услуги."
+        bills = self.char.income / 5 + 5000
+        ev_text = f"Вам необходимо оплатить {bills}₽ за коммунальные услуги и на необходимые потребности."
         ev_char = "Ассистент"
         ev_inputs = {"OK": -bills}
         return Event(ev_type, ev_text, ev_char, ev_inputs)
@@ -214,7 +214,7 @@ class GameState:
             return PlayState.LOSS
         if self.debt <= 0:
             return PlayState.WIN
-        if self.turn == self.product.duration:
+        if self.turn > self.product.duration:
             if self.debt > 0:
                 return PlayState.LOSS
             else:
@@ -236,7 +236,7 @@ class GameState:
         match self.month_status:
             case MonthStatus.BEGIN:
                 self.turn += 1
-                self.event_counter = random.randint(1, 3)
+                self.event_counter = random.randint(3, 5)
                 print("ev_counter", self.event_counter)
                 self.event = self.get_paid_event()
                 self.month_status = MonthStatus.MIDDLE
