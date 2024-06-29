@@ -29,7 +29,7 @@ function createInputDetails(choice) {
                     </div>
                     <div id="input_field">
                         <label for="amnt">Сумма кредита</label>
-                        <input type="range" min="30000" max="2000000" id="slider" name="amnt" required />
+                        <input type="range" min="30000" max="2000000" step="10000" id="slider" name="amnt" required />
                         <p id="amnt_label"></p>
                     </div>
                     <div id="input_field">
@@ -59,7 +59,7 @@ function createInputDetails(choice) {
                     </div>
                     <div id="input_field">
                         <label for="amnt">Сумма кредита</label>
-                        <input type="range" min="1500" max="1500000" id="slider" name="amnt" required />
+                        <input type="range" min="1500" max="1500000" step="10000" id="slider" name="amnt" required />
                         <p id="amnt_label"></p>
                     </div>
                     <div id="input_field">

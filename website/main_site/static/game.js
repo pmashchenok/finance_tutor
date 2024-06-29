@@ -51,7 +51,22 @@ function showHelp() {
     help_div.innerHTML = `
         <h6>Справка</h6>
         <p>Ваш продукт: ${product_str} на сумму ${state.product.amnt}₽, 
-        продолжительность ${state.product.duration} мес.</p>
+        продолжительность ${state.product.duration} мес.,</p>
+    `
+
+    if (state.product_type == "LOAN_MAIN") {
+        help_div.innerHTML += `
+            <p>Процентная ставка первого периода кредита: ${state.product.year_interest_1st_period*100}% 
+            (${state.product.first_period_dur} мес.), процентная ставка второго периода кредита: ${state.product.year_interest_2nd_period*100}%</p>
+            <p>Текущая ставка: ${state.product.year_interest*100}%</p>
+        `
+    } else {
+        help_div.innerHTML += `
+            <p>Процентная ставка: ${state.product.year_interest*100}%</p>
+        `
+    }
+
+    help_div.innerHTML += `
         <p>Ежемесячные платежи вычисляются по формуле: <img src="static/annuity.png"></p>
         <p>Таким образом, Ваш ежемесячный платеж составляет ${annuity}₽</p>
         <button onclick="hideHelp();">OK</button>

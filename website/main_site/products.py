@@ -33,7 +33,6 @@ class MainLoan(Loan):
     first_period_dur: int 
     # ^ определяется индивидуально, от 25% до 59.5%
     # от 6 до 36 месяцев
-    year_interest_2nd_period = 0.039
 
     is_client: bool  # Тип клиента
 
@@ -48,9 +47,10 @@ class MainLoan(Loan):
         self.has_furry_zero = has_furry_zero
         self.year_interest_1st_period = interest_1st_period
         self.first_period_dur = first_period_dur
+        self.year_interest_2nd_period = 0.039
 
     def set_year_interest(self, cur_month: int):
-        if self.first_period_dur <= cur_month:
+        if self.first_period_dur >= cur_month:
             self.year_interest = self.year_interest_1st_period
         else:
             self.year_interest = self.year_interest_2nd_period
