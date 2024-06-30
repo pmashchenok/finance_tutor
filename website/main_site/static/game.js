@@ -50,11 +50,11 @@ if (cur_event.type == "CHOICE") {
 }
 
 other_character.innerHTML = `
-    <img src="${cur_event.character}.png">
+    <img src="${static_url}/${cur_event.character}.png">
 `;
 
 character.innerHTML = `
-    <img src="character.png">
+    <img src="${static_url}/character.png">
 `;
 
 function showHelp() {

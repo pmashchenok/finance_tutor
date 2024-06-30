@@ -6,6 +6,7 @@
 <script>
     let state = JSON.parse("{{ state|escapejs }}");
     let annuity = JSON.parse("{{ annuity|escapejs }}");
+    let static_url = "static";
     let ann_url = "{% static 'annuity.png' %}";
     let a_url = "{% static 'a.png' %}";
     let p_url = "{% static 'p.png' %}";
