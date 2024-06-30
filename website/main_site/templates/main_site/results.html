@@ -9,7 +9,10 @@
 
 <!-- Тут из-за использования переменных из шаблонов Django вылезает куча ошибок :( -->
 {% block content %}
-    <script> let score = JSON.parse("{{ score|escapejs }}"); </script>
+    <script> 
+        let score = JSON.parse("{{ score|escapejs }}"); 
+        let rating = JSON.parse("{{ rating|escapejs }}");
+    </script>
     <h2>Результаты</h2>
     <div class="results">
         {% if score < 3 %}

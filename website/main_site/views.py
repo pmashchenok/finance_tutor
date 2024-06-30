@@ -76,7 +76,8 @@ def results(request):
     if request.method == "GET":
         answers = json.loads(f"[{request.GET['results']}]")
         test.check_answers(answers)
-        return render(request, "main_site/results.html", context={"score": test.score})
+        rating = test.rating()
+        return render(request, "main_site/results.html", context={"score": test.score, "rating": rating})
     
 def start_game(request):
     global state

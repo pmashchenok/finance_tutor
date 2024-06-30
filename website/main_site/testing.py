@@ -58,3 +58,6 @@ class TestState:
         for (a, b) in zip(self.answers_list, user_answers):
             if a == b:
                 self.score += 1
+
+    def rating(self):
+        return self.score / 5 - 1

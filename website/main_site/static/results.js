@@ -14,4 +14,4 @@ if (score < 3) {
     comm_text = "У вас отличные знания!";
 }
 
-comm_p.innerHTML = `${comm_text}`;
+comm_p.innerHTML = `${comm_text} Ваш рейтинг: ${rating}`;
