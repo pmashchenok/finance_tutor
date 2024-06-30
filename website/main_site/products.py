@@ -4,8 +4,6 @@ from enum import Enum
 # Тип продукта
 # - Кредит на любые цели
 # - Кредит на покупку
-# - Кредитка 2 года без %
-# - Кредитка 200 дней без %
 class ProductType(Enum):
     LOAN_MAIN = 1
     LOAN_TARGET = 2
@@ -25,6 +23,10 @@ class Loan:
         x = (1 + r)**n
 
         return int(P*(r*x) / (x-1))
+    
+    @staticmethod
+    def debt_part(debt, interest, payment):
+        return payment - (debt * interest/12)
 
 # Кредит на любые цели
 @dataclass
@@ -37,7 +39,6 @@ class MainLoan(Loan):
     is_client: bool  # Тип клиента
 
     # Инициализация
-    # TODO: рассмотреть как определяется ставка за первый период
     def __init__(self, type: bool, duration: int, 
                  amnt: int, has_furry_zero: bool, interest_1st_period: float,
                  first_period_dur: int):
@@ -49,11 +50,13 @@ class MainLoan(Loan):
         self.first_period_dur = first_period_dur
         self.year_interest_2nd_period = 0.039
 
+    # TODO Я не понимаю как считаются проценты с меняющейся годовой ставкой
     def set_year_interest(self, cur_month: int):
-        if self.first_period_dur >= cur_month:
-            self.year_interest = self.year_interest_1st_period
-        else:
-            self.year_interest = self.year_interest_2nd_period
+        self.year_interest = self.year_interest_1st_period
+        #if self.first_period_dur >= cur_month:
+        #    self.year_interest = self.year_interest_1st_period
+        #else:
+        #    self.year_interest = self.year_interest_2nd_period
 
 # Кредит на товар
 @dataclass
@@ -61,8 +64,6 @@ class TargetLoan(Loan):
     year_interest: float # Устанавливается индивидуально
 
     # Инициализация
-    # TODO: должен возвращаться тип Enum, который определяет, почему не смогли выдать кредит 
-    # TODO: рассмотреть как определяется ставка за первый период
     def __init__(self, type: bool, duration: int, 
                  amnt: int, has_furry_zero: bool, interest: float) -> bool:
         self.amnt = amnt

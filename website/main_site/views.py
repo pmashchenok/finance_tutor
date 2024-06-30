@@ -99,7 +99,8 @@ def product_input(request):
         income = int(request.POST["income"])
         work_exp = int(request.POST["work_exp"])
         client = request.POST["client"] == "y"
-        character = gamec.Character(name, age, citizenship, income, work_exp, income, client)
+        rating = 0
+        character = gamec.Character(name, age, citizenship, income, work_exp, income, client, rating)
         context = json.dumps(character.__dict__())
         print(context, file=sys.stderr)
         return render(request, "main_site/product_input.html", context={ "character": context })

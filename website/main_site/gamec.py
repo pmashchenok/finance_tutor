@@ -12,7 +12,8 @@ class PlayState(Enum):
 class EventType(Enum):
     CHOICE = 1
     INPUT = 2
-    END = 3
+    CREDIT = 3
+    END = 4
 
 class MonthStatus(Enum):
     BEGIN = 1
@@ -47,6 +48,7 @@ class Character:
     work_exp: int
     balance: int
     client: bool
+    rating: float
 
     def __dict__(self):
         return {
@@ -56,7 +58,8 @@ class Character:
             "income": self.income,
             "work_exp": self.work_exp,
             "balance": self.balance,
-            "client": self.client
+            "client": self.client,
+            "rating": self.rating
         }
 
 class GameState:
@@ -64,6 +67,7 @@ class GameState:
     product: products.MainLoan | products.TargetLoan
     product_type: products.ProductType
     debt: int
+    month_rem: int
     turn: int 
     event: Event
     event_counter: int
@@ -175,12 +179,11 @@ class GameState:
         return Event(ev_type, ev_text, ev_char, ev_inputs)
 
     def pay_credit_event(self):
-        ev_type = EventType.CHOICE
+        ev_type = EventType.CREDIT
         credit_pay = self.product.annuity_payment()
-        ev_text = f"Вам также необходимо оплатить {credit_pay}₽ за кредит."
+        ev_text = f"Вам также необходимо совершить месячную выплату по кредиту (см. справку)."
         ev_char = "Ассистент"
-        ev_inputs = {"OK": -credit_pay}
-        self.debt -= credit_pay
+        ev_inputs = {"Введите число": 0}
         return Event(ev_type, ev_text, ev_char, ev_inputs)
     
     def win_event(self):
@@ -194,7 +197,7 @@ class GameState:
         ev_type = EventType.END
         if self.char.balance <= 0:
             ev_text = "К сожалению, Вы обанкротились!"
-        elif self.turn == self.product.duration and self.debt > 0:
+        elif self.turn > self.product.duration and self.debt > 0:
             ev_text = "К сожалению, Вы не успели выплатить кредит!"
         ev_char = "Ассистент"
         ev_inputs = {"Вернуться на главную": 0}
@@ -205,7 +208,7 @@ class GameState:
             return PlayState.LOSS
         if self.debt <= 0:
             return PlayState.WIN
-        if self.turn > self.product.duration:
+        if self.month_status is MonthStatus.BEGIN and self.turn > self.product.duration:
             if self.debt > 0:
                 return PlayState.LOSS
             else:
@@ -215,7 +218,13 @@ class GameState:
     def progress(self, game_input):
         if self.product_type is products.ProductType.LOAN_MAIN:
             self.product.set_year_interest(self.turn)
-        self.char.balance = cut_off_add(self.char.balance, game_input)
+        
+        if self.event.type is EventType.CREDIT:
+            self.char.balance = cut_off_add(self.char.balance, -game_input)
+            debt_part = products.Loan.debt_part(self.debt, self.product.year_interest, game_input) 
+            self.debt = int(cut_off_add(self.debt, -debt_part))
+        else:
+            self.char.balance = cut_off_add(self.char.balance, game_input)
 
         if self.play_state() is PlayState.WIN:
             self.event = self.win_event()

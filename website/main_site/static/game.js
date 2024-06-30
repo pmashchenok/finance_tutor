@@ -36,6 +36,12 @@ if (cur_event.type == "CHOICE") {
             <button name="game_input" class="input_btn" type="submit" value="${inps[propt]}">${propt}</button>
         `;
     }
+} else if (cur_event.type == "CREDIT") {
+    var inp = Object.entries(cur_event.inputs)[0];
+    inputs_div.innerHTML = `
+        <label for="game_input">${inp[0]}<br><input name="game_input" type="number" min="${annuity}"></label>
+        <button type="submit">Далее</button>
+    `
 } else {
     var inp = Object.entries(cur_event.inputs)[0];
     inputs_div.innerHTML = `
