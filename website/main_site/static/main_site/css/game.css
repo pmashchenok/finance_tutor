@@ -77,7 +77,7 @@ input[type=number] {
 }
 
 #input_field input[type=number] {
-    width: 32px;
+    width: 64px;
 }
 
 #input_field input[type=text] {
