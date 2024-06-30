@@ -8,27 +8,6 @@ from dataclasses import dataclass
 N_QUESTIONS = 10
 DB_NAME = "./db.sqlite3"
 
-# TODO Убрать это
-# Создание тестовой таблицы
-def make_db():
-    connection = sqlite3.connect(DB_NAME)
-    cursor = connection.cursor()
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS Questions (
-    idx INTEGER PRIMARY KEY,
-    text STRING NOT NULL,
-    answer STRING NOT NULL
-    )
-    """)
-
-    for i in range(1, 11):
-        cursor.execute("INSERT INTO Questions (idx, text, answer) VALUES (?, ?, ?)", (i, f"Q{i}", i % 4 + 1))
-
-    connection.commit()
-    connection.close()
-
-# Предполагается, что БД имеет 3 поля:
-# номер вопроса, текст и ответ в виде числа
 def get_questions():
     connection = sqlite3.connect(DB_NAME)
     return connection 
@@ -37,12 +16,13 @@ def get_questions():
 class Question:
     idx: int
     text: str
+    labels: list[str]
 
 class TestState:
-    QUESTION_COUNT = N_QUESTIONS
     score: int 
     question_list: list[Question]
     answers_list: list[int]
+    order: list[int]
     # db_conn: sqlite connection
 
     def __init__(self):
@@ -50,26 +30,26 @@ class TestState:
         self.score = 0
         self.question_list = []
         self.answers_list = []
+        self.order = []
 
-    # Получаем вопрос из pool'а вопросов, выводим его
-    # TODO 
     def get_question_list(self):
         cursor = self.db_conn.cursor()
         question = None
         for _ in range(1, N_QUESTIONS+1):
-            if len(self.already_answered) == 0:
+            if len(self.order) == 0:
                 idx = random.randrange(1, N_QUESTIONS+1)
-                cursor.execute("SELECT idx, text, answer FROM Questions WHERE idx = ?", (idx,))
+                cursor.execute("SELECT idx, text, label1, label2, label3, label4, answer FROM Test WHERE idx = ?", (idx,))
                 results = cursor.fetchone()
-                question = Question(results[0], results[1])
-                answer = results[2]
+                question = Question(results[0], results[1], results[2:-1])
+                answer = results[-1]
             else:
-                while self.question[0] in self.already_answered:
+                while question.idx in self.order:
                     idx = random.randrange(1, N_QUESTIONS+1)
-                    cursor.execute("SELECT idx, text, answer FROM Questions WHERE idx = ?", (idx,))
+                    cursor.execute("SELECT idx, text, label1, label2, label3, label4, answer FROM Test WHERE idx = ?", (idx,))
                     results = cursor.fetchone()
-                    question = Question(results[0], results[1])
-                    answer = results[2]
+                    question = Question(results[0], results[1], results[2:-1])
+                    answer = results[-1]
+            self.order.append(question.idx)
             self.question_list.append(question)
             self.answers_list.append(answer)
 

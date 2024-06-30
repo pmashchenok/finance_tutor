@@ -10,23 +10,9 @@ from django.db import IntegrityError
 from . import gamec
 from . import products
 
-# testing.make_db() # TODO
-test = testing.TestState()
-# test.get_question()
-test.question_list = [testing.Question(1, "Тестовый вопрос 1"), 
-                      testing.Question(2, "Тестовый вопрос 2"),
-                      testing.Question(3, "Тестовый вопрос 3"),
-                      testing.Question(4, "Тестовый вопрос 4"),
-                      testing.Question(5, "Тестовый вопрос 5"),
-                      testing.Question(6, "Тестовый вопрос 6"),
-                      testing.Question(7, "Тестовый вопрос 7"),
-                      testing.Question(8, "Тестовый вопрос 8"),
-                      testing.Question(9, "Тестовый вопрос 9"),
-                      testing.Question(10, "Тестовый вопрос 10")]
-test.answers_list = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2]
+test = None
 character = None
 state = None
-
 
 def index(request):
     return render(request, "main_site/index.html")
@@ -78,10 +64,14 @@ def start_quiz(request):
 
 
 def quiz(request):
+    global test
+    test = testing.TestState()
+    test.get_question_list()
     test_context = json.dumps([q.__dict__ for q in test.question_list])
     return render(request, "main_site/quiz.html", context={"test": test_context})
 
 def results(request):
+    global test
     test.score = 0
     if request.method == "GET":
         answers = json.loads(f"[{request.GET['results']}]")

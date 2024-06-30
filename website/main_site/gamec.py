@@ -139,7 +139,7 @@ class GameState:
         return state
     
     def get_event(self):
-        conn = sqlite3.connect("events.db")
+        conn = sqlite3.connect("db.sqlite3")
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Events ORDER BY RANDOM() LIMIT 1")
         results = cursor.fetchone()

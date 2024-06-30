@@ -1,5 +1,5 @@
 // test: list of questions
-// question: index + text
+// question: index + text + labels
 // results_url: link to results page
 
 var steps = 0;
@@ -16,19 +16,19 @@ function getQuestion() {
             <div class="questions">
                 <label class="question">
                     <input type="radio" name="question" value="1" />
-                    <span>1</span> 
+                    <span>${question.labels[0]}</span> 
                 </label>
                 <label class="question"> 
                     <input type="radio" name="question" value="2" />
-                    <span>2</span>
+                    <span>${question.labels[1]}</span>
                 </label>
                 <label class="question"> 
                     <input type="radio" name="question" value="3" />
-                    <span>3</span>
+                    <span>${question.labels[2]}</span>
                 </label>
                 <label class="question"> 
                     <input type="radio" name="question" value="4" />
-                    <span>4</span>
+                    <span>${question.labels[3]}</span>
                 </label>
             </div>
             <button class="submit_button" type="button" onclick="getAnswer();">→</button>
@@ -39,19 +39,19 @@ function getQuestion() {
             <div class="questions">
                 <label class="question">
                     <input type="radio" name="question" value="1" />
-                    <span>1</span> 
+                    <span>${question.labels[0]}</span> 
                 </label>
                 <label class="question"> 
                     <input type="radio" name="question" value="2" />
-                    <span>2</span>
+                    <span>${question.labels[1]}</span>
                 </label>
                 <label class="question"> 
                     <input type="radio" name="question" value="3" />
-                    <span>3</span>
+                    <span>${question.labels[2]}</span>
                 </label>
                 <label class="question"> 
                     <input type="radio" name="question" value="4" />
-                    <span>4</span>
+                    <span>${question.labels[3]}</span>
                 </label>
             </div>
             <form action="${results_url}" method="GET" name="form">
