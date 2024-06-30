@@ -187,20 +187,24 @@ class GameState:
         return Event(ev_type, ev_text, ev_char, ev_inputs)
     
     def win_event(self):
+        self.char.rating = self.rating()
         ev_type = EventType.END
-        ev_text = "Поздравляем, Вы вовремя выплатили кредит!"
+        ev_text = f"Поздравляем, Вы вовремя выплатили кредит! Ваш рейтинг: {self.char.rating}"
         ev_char = "Ассистент"
         ev_inputs = {"Вернуться на главную": 0}
         return Event(ev_type, ev_text, ev_char, ev_inputs)
 
     def lose_event(self):
+        self.char.rating = self.rating()
         ev_type = EventType.END
         if self.char.balance <= 0:
             ev_text = "К сожалению, Вы обанкротились!"
         elif self.turn > self.product.duration and self.debt > 0:
             ev_text = "К сожалению, Вы не успели выплатить кредит!"
+        ev_text += f"Ваш рейтинг: {self.char.rating}"
         ev_char = "Ассистент"
         ev_inputs = {"Вернуться на главную": 0}
+
         return Event(ev_type, ev_text, ev_char, ev_inputs)
 
     def play_state(self):
@@ -252,3 +256,44 @@ class GameState:
                 self.event = self.pay_credit_event()
                 self.month_status = MonthStatus.BEGIN
         return 
+    
+    def rating(self) -> float:
+        total_dur = self.turn
+        prod_dur = self.product.duration
+        rem_amnt = self.debt
+        total_amnt = self.product.amnt
+        rate = 0
+        if total_dur <= 12:
+            rate += 0.05
+            if total_amnt <= 100_000:
+                rate += 0.15
+            elif total_amnt <= 500_000:
+                rate += 0.25
+            elif total_amnt <= 1_500_000:
+                rate += 0.45
+            else:
+                rate += 0.65
+        elif total_dur <= 48:
+            rate += 0.1
+            if total_amnt <= 100_000:
+                rate += 0.2
+            elif total_amnt <= 500_000:
+                rate += 0.3
+            elif total_amnt <= 1_500_000:
+                rate += 0.6
+            else:
+                rate += 0.8
+        else:
+            rate += 0.2
+            if total_amnt <= 100_000:
+                rate += 0.2
+            elif total_amnt <= 500_000:
+                rate += 0.4
+            elif total_amnt <= 1_500_000:
+                rate += 0.6
+            else:
+                rate += 0.8
+        if total_dur == prod_dur and rem_amnt == 0:
+            return rate
+        else:
+            return -rate
