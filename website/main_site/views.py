@@ -56,7 +56,7 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    return render(request, 'profile.html')
+    return render(request, 'profile.html', {'user': request.user, 'score': request.user.profile.score})
 
 
 def start_quiz(request):
@@ -70,6 +70,7 @@ def quiz(request):
     test_context = json.dumps([q.__dict__ for q in test.question_list])
     return render(request, "main_site/quiz.html", context={"test": test_context})
 
+
 def results(request):
     global test
     test.score = 0
@@ -77,6 +78,10 @@ def results(request):
         answers = json.loads(f"[{request.GET['results']}]")
         test.check_answers(answers)
         rating = test.rating()
+        user = request.user
+        if user.is_authenticated:
+            user.profile.score += rating
+            user.profile.save()
         return render(request, "main_site/results.html", context={"score": test.score, "rating": rating})
     
 def start_game(request):
@@ -117,5 +122,9 @@ def game(request):
             game_input = int(request.POST["game_input"])
             state.progress(game_input)
             state_context = json.dumps(state.__dict__())
+            user = request.user
+            if user.is_authenticated:
+                user.profile.score += state.char.rating
+                user.profile.save()
         return render(request, "main_site/game.html", context={"state": state_context, 
                                                                "annuity": str(state.product.annuity_payment())})
