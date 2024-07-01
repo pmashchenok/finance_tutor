@@ -172,7 +172,7 @@ class GameState:
     
     def pay_bills_event(self):
         ev_type = EventType.CHOICE
-        bills = self.char.income / 5 + 5000
+        bills = int(self.char.income / 5 + 5000)
         ev_text = f"Вам необходимо оплатить {bills}₽ за коммунальные услуги и на необходимые потребности."
         ev_char = "Ассистент"
         ev_inputs = {"OK": -bills}
@@ -180,7 +180,6 @@ class GameState:
 
     def pay_credit_event(self):
         ev_type = EventType.CREDIT
-        credit_pay = self.product.annuity_payment()
         ev_text = f"Вам также необходимо совершить месячную выплату по кредиту (см. справку)."
         ev_char = "Ассистент"
         ev_inputs = {"Введите число": 0}
