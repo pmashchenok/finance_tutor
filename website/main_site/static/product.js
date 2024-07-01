@@ -5,13 +5,6 @@ var choice = undefined;
 var input_details = document.getElementById("input_details");
 var button = document.getElementById("submit")
 
-if (!(character.citizenship == "Россия" || character.citizenship == "РФ")) {
-    input_details.innerHTML = `
-        <p>Внимание: продукт доступен только гражданам РФ</p>
-    `
-    button.disabled = true;
-} 
-
 option.addEventListener("change", function() {
     choice = option.value;
     createInputDetails(choice);
@@ -179,3 +172,10 @@ function checkCharaInfoTL() {
     }
     return true;
 }
+
+if (!(character.citizenship == "Россия" || character.citizenship == "РФ")) {
+    input_details.innerHTML = `
+        <p>Внимание: продукт доступен только гражданам РФ</p>
+    `
+    button.disabled = true;
+} 
