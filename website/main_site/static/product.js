@@ -164,18 +164,17 @@ function checkCharaInfoML() {
 
 function checkCharaInfoTL() {
     if (character.age < 20 || character.age > 80) {
-        input_details.innerHTML = `
+        input_details.innerHTML += `
             <p>Внимание: Ваш возраст не соответствует требованиям</p>
         `;
         button.disabled = true;
         return false;
     }
+    if (!(character.citizenship == "Россия" || character.citizenship == "РФ")) {
+        input_details.innerHTML += `
+            <p>Внимание: продукт доступен только гражданам РФ</p>
+        `
+        button.disabled = true;
+    } 
     return true;
 }
-
-if (!(character.citizenship == "Россия" || character.citizenship == "РФ")) {
-    input_details.innerHTML = `
-        <p>Внимание: продукт доступен только гражданам РФ</p>
-    `
-    button.disabled = true;
-} 
