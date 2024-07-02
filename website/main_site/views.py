@@ -80,7 +80,7 @@ def results(request):
         rating = test.rating()
         user = request.user
         if user.is_authenticated:
-            user.profile.score += rating
+            user.profile.score += round(rating, 2)
             user.profile.save()
         return render(request, "main_site/results.html", context={"score": test.score, "rating": rating})
     
@@ -124,7 +124,7 @@ def game(request):
             state_context = json.dumps(state.__dict__())
             user = request.user
             if user.is_authenticated:
-                user.profile.score += state.char.rating
+                user.profile.score += round(state.char.rating, 2)
                 user.profile.save()
         return render(request, "main_site/game.html", context={"state": state_context, 
                                                                "annuity": str(state.product.annuity_payment())})
