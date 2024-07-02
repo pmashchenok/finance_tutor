@@ -163,6 +163,9 @@ a {
 .other_character, .character, .dialogue, .info, .help {
     box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
     background: white;
+}
+
+.dialogue, .info, .help {
     padding: 1%;
 }
 
@@ -174,6 +177,10 @@ a {
 
 .other_character, .character {
     height: 256px;
+}
+
+.other_character img, .character img {
+    width: 100%;
 }
 
 .help {
