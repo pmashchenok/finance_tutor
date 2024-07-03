@@ -6,7 +6,7 @@
 <script>
     let state = JSON.parse("{{ state|escapejs }}");
     let annuity = JSON.parse("{{ annuity|escapejs }}");
-    let static_url = "static";
+    let static_url = "static/main_site/img";
     let ann_url = "{% static 'annuity.png' %}";
     let a_url = "{% static 'a.png' %}";
     let p_url = "{% static 'p.png' %}";
@@ -36,5 +36,5 @@
 {% block help %}
 <button onclick="showHelp();" type="button" id="help">Справка</button> 
 <div class="help"></div>
-<script src="{% static 'game.js' %}"></script>
+<script src="{% static 'main_site/js/game.js' %}"></script>
 {% endblock %}
