@@ -3,16 +3,40 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-    <h1>Главная</h1>
-    <p>Это Главная страница</p>
-    <a href="{% url 'start_quiz' %}">Тест</a><br>
-    <a href="{% url 'start_game' %}">Игра</a><br>
-    {% if user.is_authenticated %}
-                <li><a href="{% url 'profile' %}">Профиль</a></li>
-            {% else %}
-                <li><a href="{% url 'login' %}">Вход</a></li>
-                <li><a href="{% url 'signup' %}">Регистрация</a></li>
-            {% endif %}
+    <div class="header">
+        <div class="container" >
+        
+            <div class="header-logo"><img style="width: 200px; height: 60px;" src="..\..\static\logo.svg" alt="" ></div>
+            
+            <div class="title">
+                {% if user.is_authenticated %}
+                
+                        <div class="in"><a href="{% url 'profile' %}" style="color: #ff0078;">Профиль</a></div>
+                
+                    {% else %}
+                    
+                        <div class="in" style="border-right: 1px solid #ff0078"><a href="{% url 'login' %}" style="color: #ff0078;">Вход</a></div>
+                        <div class="in"><a href="{% url 'signup' %}" style="color: #ff0078;">Регистрация</a></div>
+                    
+                    {% endif %}
+            </div>
+            
+        </div>
+    </div>
+
+    <center><h2>Приложение-симулятор по кредитным выплатам</h2></center>
+    
+    <div class="buttons">
+        <ul>
+            <li>
+                <button class="btn"><a href="{% url 'start_game' %}" style="text-decoration: none; color: white">Игра</a></button>
+            </li>
+            <li>
+                <button class="btn"><a href="{% url 'start_quiz' %}" style="text-decoration: none; color: white">Тест</a></button>
+            </li>
+        </ul>
+    </div>
+    
 {% endblock %}
 <h1>Информация</h1>
     <p>Это инфо страница</p>
